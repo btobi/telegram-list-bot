@@ -51,7 +51,7 @@ def add_item(bot, update):
     print_items(new_item=update.message.text)
 
 
-def print_items(new_item=None, deleted_item=None):
+def print_items(update=None, new_item=None, deleted_item=None):
     message = ""
 
     if new_item:
@@ -67,7 +67,10 @@ def print_items(new_item=None, deleted_item=None):
         message += "Leer"
 
     message += "\n".join(list_items)
-    send_message(message)
+    if update:
+        update.message.reply_text(message)
+    else:
+        send_message(message)
 
 
 def delete_item(bot, update, args):
@@ -76,7 +79,7 @@ def delete_item(bot, update, args):
 
 
 def only_list(bot, update):
-    print_items()
+    print_items(update)
 
 
 def clear_list(bot, update):
