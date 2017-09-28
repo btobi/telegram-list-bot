@@ -20,7 +20,10 @@ list_items = []
 
 def send_message(message):
     for userid in userids:
-        updater.bot.send_message(chat_id=userid, text=message, parse_mode=ParseMode.HTML)
+        try:
+            updater.bot.send_message(chat_id=userid, text=message, parse_mode=ParseMode.HTML)
+        except BadRequest:
+            print("Error sending message ... \" \n {} \n \" to user {}.".format(message, userid))
 
 
 def error_callback(bot, update, error):
