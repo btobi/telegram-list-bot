@@ -82,14 +82,34 @@ def clear_list(bot, update):
     send_message("Liste gelöscht")
 
 
+def help_message(bot, update):
+    message = "*Folgende Befehle sind möglich:* \n"
+    commands = [
+        "Element - Element hinzufügen",
+        "/list - Liste anzeigen",
+        "/clear - Liste leeren",
+        "/del Element - Element löschen",
+        "/help - Diese Hilfe anzeigen",
+    ]
+    message += "\n".join(commands)
+    update.message.reply_text(message, parse_mode=ParseMode.MARKDOWN)
+
+
+def welcome(bot, update):
+    update.message.reply_text("Willkommen bei der Einkaufsliste!")
+    help_message(bot, update)
+
+
 def run_bot():
     dispatcher.add_handler(CommandHandler("del", delete_item, pass_args=True))
     dispatcher.add_handler(CommandHandler("list", only_list))
     dispatcher.add_handler(CommandHandler("clear", clear_list))
+    dispatcher.add_handler(CommandHandler("help", help_message))
+    dispatcher.add_handler(CommandHandler("start", welcome))
     dispatcher.add_handler(MessageHandler(Filters.text, add_item))
     dispatcher.add_error_handler(error_callback)
 
-    send_message("BOT STARTED")
+    send_message("/start")
 
     updater.start_polling()
     updater.idle()
