@@ -1,0 +1,6 @@
+shopping-list-bot:
+  image: btobias92/shopping-list-bot:latest
+  environment:
+    - PYTHONUNBUFFERED=1
+    - TELEGRAM_BOT_TOKEN=
+    - TELEGRAM_BOT_USERS=
